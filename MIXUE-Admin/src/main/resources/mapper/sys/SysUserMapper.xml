@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oligizzz.mixueadmin.dao.sys.SysUserDao">
+
+
+	<!--属性映射-->
+	<resultMap id="ResultUserMap" type="User">
+		<id property="id" column="id"></id>
+		<result property="username" column="username"></result>
+		<result property="password" column="password"></result>
+ 	</resultMap>
+	<sql id="UserVo">
+		select * from user
+	</sql>
+
+	<select id="selectUserById" resultMap="ResultUserMap" parameterType="integer">
+		<include refid="UserVo"/>
+		where id = #{id}
+	</select>
+
+	<select id="selectUserByCondition" resultMap="ResultUserMap" parameterType="user">
+		<include refid="UserVo"/>
+		<where>
+			<if test="username != null and username !=''">
+				and username = #{username}
+			</if>
+
+			<if test="password != null and password !=''">
+				and password = #{password}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

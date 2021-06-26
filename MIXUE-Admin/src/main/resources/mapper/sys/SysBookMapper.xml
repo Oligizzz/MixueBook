@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oligizzz.mixueadmin.dao.sys.SysBookDao">
+
+	<resultMap id="BookResult" type="book">
+		<id property="id" column="id"></id>
+		<result property="cover" column="cover"></result>
+		<result property="title" column="title"></result>
+		<result property="author" column="author"></result>
+		<result property="date" column="date"></result>
+		<result property="press" column="press"></result>
+		<result property="cid" column="cid"></result>
+	</resultMap>
+
+	<sql id="BookCateGoryVo">
+		select *
+		from book
+			     join category c on c.id = book.cid
+	</sql>
+	<update id="updateBook" parameterType="book">
+		update book
+		<set>
+			<trim prefixOverrides=",">
+				<if test="cover != null and cover !=''">
+					cover = #{cover},
+				</if>
+				<if test="title != null and title !=''">
+					title + #{title},
+				</if>
+				<if test="author != null and author !=''">
+					author = #{author},
+				</if>
+				<if test="date != null and date !=''">
+					date = #{date},
+				</if>
+				<if test="press != null and press !=''">
+					press = #{press},
+				</if>
+				<if test="abs != null and abs !=''">
+					abs = #{press},
+				</if>
+				<if test="cid != null">
+					cid = #{cid},
+				</if>
+			</trim>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!--查询所有书籍，并按照id升序排列-->
+	<select id="selectAllBook" resultMap="BookResult">
+		select * from book group by id
+	</select>
+
+	<!--根据Id查询书籍-->
+	<select id="selectBookById" resultMap="BookResult" parameterType="integer">
+		select *
+		from book
+		where id = #{id};
+	</select>
+
+	<!--根据种类查询书籍-->
+	<select id="selectBookByCategory" resultMap="BookResult" parameterType="category">
+		<include refid="BookCateGoryVo"/>
+		where c.name = #{category.name}
+	</select>
+
+
+	<!--添加书籍-->
+	<insert id="addBook" parameterType="book">
+		insert into book
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cover != null and cover !=''">
+				cover,
+			</if>
+			<if test="title != null and title !=''">
+				title,
+			</if>
+			<if test="author != null and author !=''">
+				author,
+			</if>
+			<if test="date != null and date !=''">
+				date,
+			</if>
+			<if test="press != null and press !=''">
+				press,
+			</if>
+			<if test="abs != null and abs !=''">
+				abs,
+			</if>
+			<if test="cid != null">
+				cid,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="cover != null and cover !=''">
+				#{cover},
+			</if>
+			<if test="title != null and title !=''">
+				#{title},
+			</if>
+			<if test="author != null and author !=''">
+				#{author},
+			</if>
+			<if test="date != null and date !=''">
+				#{date},
+			</if>
+			<if test="press != null and press !=''">
+				#{press},
+			</if>
+			<if test="abs != null and abs !=''">
+				#{abs},
+			</if>
+			<if test="cid != null">
+				#{cid},
+			</if>
+		</trim>
+	</insert>
+
+	<!--通过ID删除书籍-->
+	<delete id="deletedBookById" parameterType="integer">
+		delete from book where id = #{id}
+	</delete>
+</mapper>

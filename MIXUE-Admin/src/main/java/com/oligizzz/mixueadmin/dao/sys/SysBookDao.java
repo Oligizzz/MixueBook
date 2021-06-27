@@ -35,6 +35,13 @@ public interface SysBookDao {
      * @return
      */
     List<Book> selectBookByCategory(@Param("category") Category category);
+
+    /**
+     * 更具关键字查询相关书籍
+     * @param keyWords
+     * @return
+     */
+    List<Book> selectAllBookByKeyWords(String keyWords);
     /**
      * 添加书籍
      * @param book

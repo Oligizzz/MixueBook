@@ -46,6 +46,11 @@ public class SysBookServicesImpl implements SysBookServices {
     }
 
     @Override
+    public List<Book> selectAllBookByKeyWords(String keyWords) {
+        return bookDao.selectAllBookByKeyWords(keyWords);
+    }
+
+    @Override
     public int updateBook(Book book) {
         return bookDao.updateBook(book);
     }

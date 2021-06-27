@@ -47,5 +47,12 @@ public interface SysBookServices {
      */
     List<Book> selectByCategory(Category category);
 
+    /**
+     * 根据关键词查询所有书籍
+     * @param keyWords
+     * @return
+     */
+    List<Book> selectAllBookByKeyWords(String keyWords);
+
     int updateBook(Book book);
 }

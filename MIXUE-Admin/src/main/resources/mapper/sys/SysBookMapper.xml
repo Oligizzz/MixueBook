@@ -65,6 +65,14 @@
 		where c.name = #{category.name}
 	</select>
 
+	<select id="selectAllBookByKeyWords" resultMap="BookResult" parameterType="string">
+		select * from book
+		<where>
+			title like "%${keyWords}%"
+			or author like "%${keyWords}%"
+		</where>
+	</select>
+
 
 	<!--添加书籍-->
 	<insert id="addBook" parameterType="book">

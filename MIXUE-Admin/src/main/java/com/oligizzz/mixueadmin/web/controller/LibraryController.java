@@ -68,5 +68,16 @@ public class LibraryController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/api/search")
+    @ResponseBody
+    public List<Book> getAllBookByKeyWords(@RequestParam("keywords") String keywords){
+        if("".equals(keywords)){
+            return bookServices.selectAllBook();
+        }
+        System.out.println(keywords);
+        return bookServices.selectAllBookByKeyWords(keywords);
+    }
+
 
 }

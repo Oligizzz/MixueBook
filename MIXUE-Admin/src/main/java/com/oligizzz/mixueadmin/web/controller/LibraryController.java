@@ -55,6 +55,11 @@ public class LibraryController {
     @GetMapping("/api/categories/{cid}/books")
     @ResponseBody
     public List<Book> getAllBookByCategory(@PathVariable("cid") int cid){
+        // 如果CID为0 ，请求全部书籍
+        if(cid == 0){
+            return bookServices.selectAllBook();
+        }
+        //否则分类查询
         Category category = categoryDao.selectCategoryById(cid);
         if(category==null){
             return new ArrayList<>();
